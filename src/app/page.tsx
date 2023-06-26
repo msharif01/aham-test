@@ -1,9 +1,6 @@
-import UserForm from "../../components/UserForm";
+import UserForm from "./components/userForm/UserForm";
 
 // TODO:
-// -Sidebar , when home page highlight register
-// --View users, when redirect view users page highlight the sidebar
-
 // -UserList component
 // -- Table, with columns of, name , email , phone number, account number
 // -- Fill with mock data
