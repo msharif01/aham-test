@@ -14,7 +14,7 @@ const links = [
   {
     id: 2,
     title: "User List",
-    url: "/users",
+    url: "/userList",
   },
   {
     id: 3,
