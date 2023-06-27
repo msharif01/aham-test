@@ -2,12 +2,22 @@
 
 import { Table } from '@mantine/core';
 import ActionDropdown from '../actiondropdown/ActionDropdown';
+import { createContext } from 'react';
 
 const users = [
   { accountNumber: "001", name: "person A", email: 'personA@gmail.com', phoneNumber: '0111111111' },
   { accountNumber: "002", name: "person B", email: 'personB@gmail.com', phoneNumber: '0122222222' },
   { accountNumber: "003", name: "person C", email: 'personC@gmail.com', phoneNumber: '0133333333' }
 ];
+
+export type UserContextType = {
+  accountNumber: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+};
+
+export const UserContext = createContext<UserContextType | null>(null);
 
 export default function UserListTable() {
   const rows = users.map((user) => (
@@ -16,7 +26,11 @@ export default function UserListTable() {
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.phoneNumber}</td>
-      <td><ActionDropdown/></td>
+      <td>
+        <UserContext.Provider value={user}>
+        <ActionDropdown />
+        </UserContext.Provider>
+        </td>
     </tr>
   ));
 
