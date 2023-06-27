@@ -5,10 +5,10 @@ import UserForm from "./components/userForm/UserForm";
 // -- Redirect (DONE)
 // -- Table, with columns of, name , email , phone number, account number 
 // -- Fill with mock data (DONE)
-// -- Drop down action
-// -- Edit - redirect to Home with prefill data
-// -- View - Just view the details , routing -> [id] page -> bare bone only details
-// -- Delete, remove the user from list
+// -- Drop down action (DONE)
+// -- View - just view the details , 
+// routing -> [id] page (IN PROGRESS) -> bare bone only details 
+// -- Delete - remove the user from list
 
 export default function Home() {
   return (
