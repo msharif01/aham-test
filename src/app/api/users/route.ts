@@ -1,6 +1,7 @@
+import {User} from "@/app/models/User"
 import connect from "@/app/utils/db"
 import { NextRequest, NextResponse } from "next/server"
-import User from "../../models/User"
+
 
 export const GET = async (request: NextRequest)=> {
 

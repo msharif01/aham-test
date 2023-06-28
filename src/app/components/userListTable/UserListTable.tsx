@@ -3,6 +3,7 @@
 import { Table } from '@mantine/core';
 import ActionDropdown from '../actiondropdown/ActionDropdown';
 import { createContext } from 'react';
+import {User} from '@/app/models/User';
 
 const users = [
   { accountNumber: "001", name: "person A", email: 'personA@gmail.com', phoneNumber: '0111111111' },
@@ -19,7 +20,11 @@ export type UserContextType = {
 
 export const UserContext = createContext<UserContextType | null>(null);
 
-export default function UserListTable() {
+type UserListTableProps = {
+  data: typeof User;
+};
+
+export default function UserListTable({data}: UserListTableProps) {
   const rows = users.map((user) => (
     <tr key={user.accountNumber}>
       <td>{user.accountNumber}</td>
