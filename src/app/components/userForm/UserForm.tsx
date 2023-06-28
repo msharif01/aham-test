@@ -20,9 +20,7 @@ export default function UserForm({ data }: UserFormProps) {
   const handleSubmit = async (values: Record<string, string>) => {
     const { name, email, phoneNumber } = values;
 
-    console.log("before try")
     try {
-      console.log("start")
       const res = await fetch("/api/users/create", {
         method: "POST",
         headers: {
