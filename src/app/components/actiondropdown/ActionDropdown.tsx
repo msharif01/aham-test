@@ -6,37 +6,14 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../userListTable/UserListTable";
 
 import { Dialog, Group, Text, Button } from "@mantine/core";
-// import useSWR from "swr";
+import { FlagContext } from "@/app/userList/page";
 
 export default function ActionDropdown() {
   const user = useContext(UserContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const deleteFlag = useContext(FlagContext);
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
-
-  const [data, setData] = useState([]);
-  const [err, setErr] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const getData = async () => {
-      setIsLoading(true);
-      const res = await fetch("/api/users", {
-        cache: "no-store",
-      });
-
-      if (!res.ok) {
-        setErr(true);
-      }
-
-      const data = await res.json()
-
-      setData(data);
-      setIsLoading(false);
-    };
-    getData()
-  }, []);
 
   const handleChange = (value: string | null) => {
     if (value === "view") {
@@ -59,7 +36,14 @@ export default function ActionDropdown() {
       await fetch(`/api/users/${user?._id}`, {
         method: "DELETE",
       });
-      setData(data)
+
+      const res = await fetch("/api/users", {
+        cache: "no-store",
+      });
+
+      handleClose()
+      deleteFlag?.setIsUserDeleted?.(true);
+      router.push("/userList")
     } catch (err) {
       console.log(err);
     }
