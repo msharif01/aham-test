@@ -1,22 +1,52 @@
 "use client";
 
-import {
-  TextInput,
-  Checkbox,
-  Button,
-  Group,
-  Box,
-  PasswordInput,
-} from "@mantine/core";
+import { UserData } from "@/app/userList/[id]/page";
+import { TextInput, Button, Group, Box, Dialog, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-export default function UserForm() {
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+type UserFormProps = {
+  data: UserData;
+};
+
+export default function UserForm({ data }: UserFormProps) {
+  const [error, setError] = useState<Error | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const router = useRouter();
+
+  const handleSubmit = async (values: Record<string, string>) => {
+    const { name, email, phoneNumber } = values;
+
+    console.log("before try")
+    try {
+      console.log("start")
+      const res = await fetch("/api/users/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phoneNumber,
+        }),
+      });
+
+      res.status === 201 && router.push("/userList");      
+    } catch (err) {
+      console.error(err);
+      setError(err as Error);
+    }
+  };
+
   const form = useForm({
     initialValues: {
-      name: "",
-      email: "",
-      phoneNumber: "",
-      termsOfService: false,
+      name: data?.name || "",
+      email: data?.email || "",
+      phoneNumber: data?.phoneNumber || "",
     },
 
     validate: {
@@ -24,9 +54,9 @@ export default function UserForm() {
     },
   });
 
-  return (
-    <Box maw={300} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+  return (<>
+      <Box maw={300} mx="auto">
+      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <TextInput
           withAsterisk
           label="Full Name"
@@ -48,19 +78,6 @@ export default function UserForm() {
           {...form.getInputProps("phoneNumber")}
         />
 
-        <PasswordInput
-          placeholder="Password"
-          label="Password"
-          description="Password must include at least one letter, number and special character"
-          withAsterisk
-        />
-
-        <Checkbox
-          mt="md"
-          label="I agree with the terms and conditions"
-          {...form.getInputProps("termsOfService", { type: "checkbox" })}
-        />
-
         <Group position="right" mt="md">
           <Button type="submit" className="outline_btn">
             Submit
@@ -68,5 +85,7 @@ export default function UserForm() {
         </Group>
       </form>
     </Box>
+    </>
+
   );
 }

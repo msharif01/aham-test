@@ -1,11 +1,9 @@
-// TODO: The routing to this page works
-// Just need to make the getDetail API call with the use of param
-
 "use client";
 
+import UserForm from "@/app/components/userForm/UserForm";
 import { useEffect, useState } from "react";
 
-interface UserData {
+export interface UserData {
   name: string;
   email: string;
   phoneNumber: string;
@@ -39,21 +37,21 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchData();
   }, []);
 
-  console.log(userData, "popopopopopo");
-
   if (userData === null) {
-    return <div>Loading...</div>; // Render a loading state while data is being fetched
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="flex-center">
+          <div>Loading...</div>;
+        </div>
+      </main>
+    );
   }
 
   return (
-    <>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        
-          <h1>User Name: {userData.name}</h1>
-          <h1>User Email: {userData.email}</h1>
-          <h1>User Phone: {userData.phoneNumber}</h1>
-
-      </main>
-    </>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="flex-center">
+        <UserForm data={userData} />
+      </div>
+    </main>
   );
 }

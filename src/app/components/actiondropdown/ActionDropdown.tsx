@@ -14,8 +14,6 @@ export default function ActionDropdown() {
 
   const router = useRouter();
 
-  console.log(user?._id, "sdjajdaskdjkashdkash")
-
   const handleChange = (value: string | null) => {
     if (value === "view") {
       router.push(`/userList/${user?._id}`);
