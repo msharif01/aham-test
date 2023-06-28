@@ -2,7 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, make sure your node version is 14.18.0 above , if there's any trouble try to set it to v19.3.0
+
+Can use nvm for this (https://github.com/nvm-sh/nvm)
+
+Second, run the development server:
 
 ```bash
 npm run dev
@@ -14,8 +18,5 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 This project uses mantine UI component library for ready made components such as buttons , fields , form and etcetra... (https://mantine.dev/guides/next/)
