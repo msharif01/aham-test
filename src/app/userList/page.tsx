@@ -15,17 +15,7 @@ async function getAllUsers() {
   return res.json();
 }
 
-async function getUser(id) {
-  const res = await fetch(`http://localhost:3000/api/users/${id}`, {
-    cache: "no-store",
-  });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
 
 const UserList = () => {
   const [userData, setUserData] = useState([]);
