@@ -8,11 +8,9 @@ import {User} from '@/app/models/User';
 const users = [
   { accountNumber: "001", name: "person A", email: 'personA@gmail.com', phoneNumber: '0111111111' },
   { accountNumber: "002", name: "person B", email: 'personB@gmail.com', phoneNumber: '0122222222' },
-  { accountNumber: "003", name: "person C", email: 'personC@gmail.com', phoneNumber: '0133333333' }
 ];
 
 export type UserContextType = {
-  accountNumber: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -20,14 +18,51 @@ export type UserContextType = {
 
 export const UserContext = createContext<UserContextType | null>(null);
 
+type User = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+};
+
+
 type UserListTableProps = {
-  data: typeof User;
+  data: User[];
 };
 
 export default function UserListTable({data}: UserListTableProps) {
-  const rows = users.map((user) => (
-    <tr key={user.accountNumber}>
-      <td>{user.accountNumber}</td>
+  
+  const peopleA = [
+    {
+        "_id": "649bd0dad21e0abe07cd1ee1",
+        "name": "deadlock",
+        "email": "deadlockk@gmail.com",
+        "phoneNumber": "0111234567",
+    },
+    {
+        "_id": "949bp9dad21e0ibe87cd1ee1",
+        "name": "chamber",
+        "email": "chamber@gmail.com",
+        "phoneNumber": "014434567",
+    },
+  ];
+
+  const peopleB = [
+    {
+        _id: "649bd0dad21e0abe07cd1ee1",
+        name: "deadlock",
+        email: "deadlockk@gmail.com",
+        phoneNumber: "0111234567",
+    },
+    {
+        _id: "949bp9dad21e0ibe87cd1ee1",
+        name: "chamber",
+        email: "chamber@gmail.com",
+        phoneNumber: "014434567",
+    },
+  ];
+
+  const rows = data.map((user) => (
+    <tr key={user.email}>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.phoneNumber}</td>
@@ -43,7 +78,6 @@ export default function UserListTable({data}: UserListTableProps) {
     <Table>
       <thead>
         <tr>
-          <th>Account Number</th>
           <th>Name</th>
           <th>Email</th>
           <th>Phone Number</th>

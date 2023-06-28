@@ -16,7 +16,7 @@ export default function ActionDropdown() {
 
   const handleChange = (value: string | null) => {
     if (value === "view") {
-      router.push(`/userList/${user?.accountNumber}`);
+      router.push(`/userList/${user?.name}`);
     } else if (value === "delete") {
       handleClickOpen();
     }
