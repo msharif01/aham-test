@@ -2,10 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { Select } from "@mantine/core";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../userListTable/UserListTable";
 
 import { Dialog, Group, Text, Button } from "@mantine/core";
+// import useSWR from "swr";
 
 export default function ActionDropdown() {
   const user = useContext(UserContext);
@@ -13,6 +14,29 @@ export default function ActionDropdown() {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const [data, setData] = useState([]);
+  const [err, setErr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const res = await fetch("/api/users", {
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        setErr(true);
+      }
+
+      const data = await res.json()
+
+      setData(data);
+      setIsLoading(false);
+    };
+    getData()
+  }, []);
 
   const handleChange = (value: string | null) => {
     if (value === "view") {
@@ -30,14 +54,14 @@ export default function ActionDropdown() {
     setOpen(true);
   };
 
-  // TODO: API DELETE
-  const deleteUser = async () => {
+  const deleteUser = async (id: string) => {
     try {
-      const isRedeem = true;
-      handleClose();
-      // setData(newData);
-    } catch (e) {
-      console.error(e);
+      await fetch(`/api/users/${user?._id}`, {
+        method: "DELETE",
+      });
+      setData(data)
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -64,10 +88,12 @@ export default function ActionDropdown() {
 
         <Group align="flex-end">
           <Button
-          className="outline_btn"
+            className="outline_btn"
             autoFocus
             onClick={() => {
-              deleteUser();
+              if (user?._id) {
+                deleteUser(user._id);
+              }
             }}
           >
             Yes
