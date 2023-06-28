@@ -3,8 +3,20 @@
 import React, { useEffect, useState } from "react";
 import UserListTable from "../components/userListTable/UserListTable";
 
-async function getData() {
+async function getAllUsers() {
   const res = await fetch("http://localhost:3000/api/users", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+async function getUser(id) {
+  const res = await fetch(`http://localhost:3000/api/users/${id}`, {
     cache: "no-store",
   });
 
@@ -21,7 +33,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getData();
+        const data = await getAllUsers();
         setUserData(data);
       } catch (error) {
         console.error("Error fetching user data:", error);

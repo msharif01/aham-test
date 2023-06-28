@@ -6,6 +6,7 @@ import { createContext } from 'react';
 import {User} from '@/app/models/User';
 
 export type UserContextType = {
+  _id:string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -14,6 +15,7 @@ export type UserContextType = {
 export const UserContext = createContext<UserContextType | null>(null);
 
 type User = {
+  _id: string;
   name: string;
   email: string;
   phoneNumber: string;
@@ -27,7 +29,7 @@ type UserListTableProps = {
 export default function UserListTable({data}: UserListTableProps) {
   
   const rows = data.map((user) => (
-    <tr key={user.email}>
+    <tr key={user.name}>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>{user.phoneNumber}</td>
